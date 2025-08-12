@@ -1,3 +1,14 @@
+what is node js
+
+this is a js runtime that executes code for efficient and scalable implementation
+of backend projects in mern stack
+
+why do we need node js?
+
+in order to make sure that our servers are live 24 by 7, we need a good js runtime 
+that is event driven (this is improve the efficiency) and should be non blocking (if one task is running, it shouldnt be disturbed to execute another task) and that is provideed by nodejs
+
+NODE.JS
 Creating a node js application
 
 
@@ -13,7 +24,7 @@ Entry point / endpoint => whenever we take our project live-> it will execute th
 
 
 EXPRESS.js -> Minimal and lightweight framework for building server side applications
-
+0. npm i express
 1.import and set up the express instance (app)
 2. port listener -> req 
 
@@ -24,3 +35,37 @@ app.listen(PORT, handlerFunction)
  listen -> method 
  handlerFunction -> handles the action related to the method 
 
+
+
+app.METHOD(PATH, HANDLER)
+
+app -> express application
+METHOD -> is the HTTP method that we are using which fetching data from api 
+
+methods-> get, post, put, patch, delete 
+
+PATH -> this is location of that feature in the server 
+www.acciojob-backend.com
+
+HANDLER -> because it handles the event when the request is recieved on the server 
+
+
+//signup -> www.acciojob-backend.com/signup
+
+
+app.get("/helloworld", (req, res)=>{
+    res.send("Hello World")
+} )
+
+
+req, res -> these are the request and responsce objects that are recieved on the backend and sent to any front end 
+
+whatever inofrmation is send through my api -> it will be sent to the owner of the project 
+
+req and res are two values, that are provided to us by nodejs that we use to send or recieve the sent data 
+
+handler function simply handles the routes whenever they recieve a request on it 
+
+
+
+NODEMON -> package that will restart my server whenever i make any change in it 
