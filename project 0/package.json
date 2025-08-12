@@ -1,0 +1,16 @@
+{
+  "name": "project-0",
+  "version": "1.0.0",
+  "description": "this is the first project that we build in nodejs",
+  "license": "ISC",
+  "author": "Vishoo",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

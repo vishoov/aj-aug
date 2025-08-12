@@ -1,0 +1,26 @@
+Creating a node js application
+
+
+1-> terminal -> npm init = initialises node package manager in the folder
+
+
+
+Entry point / endpoint => whenever we take our project live-> it will execute this file 
+
+
+2-> npm run start -> this command executes a script called start
+
+
+
+EXPRESS.js -> Minimal and lightweight framework for building server side applications
+
+1.import and set up the express instance (app)
+2. port listener -> req 
+
+3. standard syntax 
+app.listen(PORT, handlerFunction)
+ 
+ app = express app instance
+ listen -> method 
+ handlerFunction -> handles the action related to the method 
+
