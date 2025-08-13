@@ -51,7 +51,7 @@ HANDLER -> because it handles the event when the request is recieved on the serv
 
 
 //signup -> www.acciojob-backend.com/signup
-
+whenever someone sign ups -> they SEND their data so that it can be saved on the db 
 
 app.get("/helloworld", (req, res)=>{
     res.send("Hello World")
@@ -69,3 +69,13 @@ handler function simply handles the routes whenever they recieve a request on it
 
 
 NODEMON -> package that will restart my server whenever i make any change in it 
+
+
+BLOG MANAGEMENT API
+
+
+MIDDLEWARES
+
+
+
+install mongodb

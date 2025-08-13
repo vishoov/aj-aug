@@ -109,6 +109,7 @@ app.get("/product/:id", (req, res)=>{
 })
 
 //query parameters 
+//localhost:3000/query?search=apple&age=20
 app.get("/query", (req, res)=>{
     const search = req.query.search;
     const age = req.query.age;

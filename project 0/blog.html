@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Management</title>
+</head>
+<body>
+    <h1 style="color: #2c3e50; font-family: Arial, sans-serif; text-align: center;">Blog Management API</h1>
+    <p style="color: #34495e; font-family: 'Georgia', serif; text-align: center;">This is an API to manage blogs, consisting of mainly CRUD operations</p>
+    <h2 style="color: #16a085; font-family: 'Verdana', sans-serif; margin-top: 20px;">Endpoints</h2>
+    <ul style="list-style-type: none; padding: 0;">
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #e74c3c;">GET /blogs</strong> - Retrieve all blogs
+        </li>
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #e74c3c;">GET /blogs/:id</strong> - Retrieve a blog by ID
+        </li>
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #27ae60;">POST /create</strong> - Create a new blog
+        </li>
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #f39c12;">PUT /blogs/:id</strong> - Update a blog by ID
+        </li>
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #c0392b;">DELETE /blogs/:id</strong> - Delete a blog by ID
+        </li>
+        <li style="margin: 10px 0; font-family: 'Courier New', monospace;">
+            <strong style="color: #8e44ad;">GET /query</strong> - Query blogs with search parameters
+        </li>
+    </ul>
+</body>
+</html>
