@@ -62,6 +62,29 @@ const blogs = [
         tags:["food", "cooking"]
     }
 ]
+//middleware 
+app.use((req, res, next)=>{
+    console.log("Recieved a request")
+    next(); //next keyword -> it tells the server to move to the next middleware or route handler
+})
+
+app.use((req, res, next)=>{
+    console.log('2nd middleware executed');
+    next();
+})
+
+//Custom middleware 
+//Logging middleware -> to log the request method and URL
+app.use((req, res, next)=>{
+    const method = req.method;
+    const url = req.url;
+    const time = new Date().toLocaleString();
+
+    console.log(`[${time}]: ${method} request to ${url}`);
+
+    next();
+})
+
 
 
 //-----------Routes for blog management-------------------
@@ -69,7 +92,7 @@ const blogs = [
 // GET /blogs - Retrieve all blogs
 // app.method(Path, handlerfunction)
 app.get("/blogs", (req, res)=>{
-
+    console.log("Fetching all blogs");
     //res
     res.status(200).json({
         message:"All blogs retrieved successfully",
@@ -100,12 +123,20 @@ app.get("/blogs/:id", (req, res)=>{
 })
 
 
+const createmiddleware = (req, res, next)=>{
+    console.log("Create middleware executed");
+
+    console.log("Request body:", req.body);
+
+    next()
+}
+
 // POST /create - Create a new blog
 //create a blog
 //add the blog to the blogs array 
 //id will be auto incremented
 //id=blogs.length+1
-app.post("/create", (req, res)=>{
+app.post("/create", createmiddleware, (req, res)=>{
     const blog = req.body;
    
     const newBlog = {

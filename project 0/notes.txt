@@ -71,11 +71,35 @@ handler function simply handles the routes whenever they recieve a request on it
 NODEMON -> package that will restart my server whenever i make any change in it 
 
 
-BLOG MANAGEMENT API
 
 
 MIDDLEWARES
+Middleware is a function that gets executed in the middle of req and res cycle 
+NOTE: middleware have access to request and response objects 
+Types 
+
+1. Application level middleware 
+
+-> app.use(function) -> express level middleware -> that we can write before all the routes that we want the middleware to execute before 
+
+middleware function -> next() keyword -> next tells that the middleware has been successfully executed 
 
 
+2. Custom middlewares 
+
+3. built in 
+    express.json()-> built in middleware function
+    express.urlencoded -> url encoded parse 
+    3rd party -> multer -> extracting files from the request 
+    morgan -> logging 
+    cors-> server middleware 
+    JWT
+    helmet -> security headers
+
+4. Route level middleware
+
+Execution order 
+
+-middlewares get executed in the order they are added 
 
 install mongodb
