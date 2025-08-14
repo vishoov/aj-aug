@@ -1,0 +1,35 @@
+Database 
+
+the destination where we store the information that is used in our application
+example user data, product data, social media posts etc etc
+except for the media 
+
+Schema -> what kind of information will we be saving in the database
+
+name, age, gender,
+email, phone number,
+password
+
+
+Relational (SQL)
+fixed structure 
+security
+uniformity
+high scalablility -> google, gmail, amazon
+financial systems 
+tables 
+
+
+
+Non-relational (NoSQL)
+flexible 
+document based 
+
+mongodb
+
+ensure a schema -> integrity, scalability, uniformity 
+
+modelling the data -> we'll be defining some rules that will be followed and cross checked whenever evene a single entry is created 
+
+
+mongoose 

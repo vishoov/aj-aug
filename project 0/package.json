@@ -5,11 +5,11 @@
   "license": "ISC",
   "author": "Vishoo",
   "type": "commonjs",
-  "main": "blog.js",
+  "main": "user-management.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev":"nodemon blog.js"
+    "dev":"nodemon user-management.js"
   },
   "dependencies": {
     "express": "^5.1.0",

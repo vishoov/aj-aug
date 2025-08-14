@@ -238,12 +238,7 @@ app.get("/query", (req, res)=>{
         message:"Blogs retrieved successfully",
         data:filteredblogs
     })
-})
-
-
-
-
-
+})  
 //-------------Routes end here ----------------------------
 
 app.listen(3000, ()=>{

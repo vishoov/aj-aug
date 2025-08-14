@@ -1,0 +1,75 @@
+MVC -> Model View Controller 
+
+MVC (Model-View-Controller) is a software design pattern that seperates an application into three components -> Model, View, Controller - improve the efficiency, organization, maintainability and scalability of our application
+
+Model
+-> Data rules, data handling, data validation 
+-> any kind of data treatmenent that we have to do before saving data to the db
+
+schemas, rules, validation methods -> Database !!!!
+Data integrity
+
+
+View
+-> Presentation Layer -> server request recieving and response sending part 
+-> we will define routes
+
+Controllers
+-> handler functions for each route 
+
+
+//CODE ON DEMAND -> only render that code that is required for the current task 
+
+
+
+Architectural method i.e. we follow the steps of this model view controller architexture to organise our projects in ways so that they can be SCALABLE 
+
+suppose we have made our project -> 1000s people want to use it 
+
+Ex. Hotstar -> world cup -> crores 
+
+    - sharding 
+    - MVC architecture
+    - microservice architecture
+    - multiple replicas of their servers 
+
+-> Modular Structure 
+
+break that project in smaller components -> React 
+
+WE want efficiency in our code -> only that code should render that is required at a time 
+
+security 
+
+
+
+Error Handling
+-> we'll be storing the data in the database - 3rd party 
+-> during the bringing of data or in the handler functions (server) there arised an error that caused our SERVER TO CRASH 
+
+-> data can be lost 
+-> server will be down -> no new requests will be entertained 
+-> Business will go down 
+
+Ex node errors, syntac errors, type errors, reference errors, internal server error, data doesnt exist, wrong query 
+
+
+
+User Management API -> standard microservice that is used by all the backends in present day 
+
+Features 
+
+Create User 
+Login User
+Logout User
+Verify Email
+forgot Password
+reset Password
+
+
+get all users
+get a specific user 
+update user inofrmation
+delete user 
+
+health route 
