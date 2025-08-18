@@ -1,12 +1,21 @@
+const User = require('../Model/user.model.js');
 
-
-const signup = (req, res)=>{
+const signup = async (req, res)=>{
     try{
     const user = req.body;
-    console.log("User created:", user);
+
+//create query using mongoose to create a new user
+
+        const newUser = new User(user);
+        //save the user to the database
+        await newUser.save();
+
+
+
+    console.log("User created:", newUser);
     res.status(201).json({
         message: "User created successfully",
-        data: user
+        data: newUser
     });
 }
     catch(err){
