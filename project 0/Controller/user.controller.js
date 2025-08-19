@@ -2,13 +2,16 @@ const User = require('../Model/user.model.js');
 
 const signup = async (req, res)=>{
     try{
-    const user = req.body;
+        const user = req.body;
 
-//create query using mongoose to create a new user
+        // const newUser = await User.create(user);
+        //db.users.insertOne(user); -> create command 
+        //this will insert the user into the database
+        const newUser = new User(user); 
 
-        const newUser = new User(user);
-        //save the user to the database
-        await newUser.save();
+        await newUser.save(); //this will save the user to the database
+
+
 
 
 
@@ -33,29 +36,17 @@ const home = (req, res) => {
         })
     }
 
-const users = [
-    { 
-        id: 1, 
-        name: "John Doe",
-        email: "johndoe@gmail.com",
-        password: "password123",
-        version: "1.0"
-    },
-    {
-        id: 2,
-        name: "Jane Smith",
-        email: "jane@gmail.com",
-        password: "password456",
-        version: "1.0"
-    }
-]
 
 
 //get a specific user by id
-const getUserByID = (req, res) => {
+const getUserByID = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = user.find(user => user.id === id);
+        const user = await User.find(
+            {
+                _id:id
+            }
+        )
         if (!user) {
             return res.status(400).json({ message: "User not found" })
         }

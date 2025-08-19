@@ -45,6 +45,11 @@ const userSchema = new mongoose.Schema({
         minLength: [6, "Please enter a longer password"],
         maxLength: [20, "Please enter a smaller password"]
     },
+    age:{
+        type:Number,
+        min: [0, "Age cannot be negative"],
+        max: [120, "Age cannot be more than 120"]
+    },
     role:{
         type:String,
         //enum -> this field can only have these values

@@ -1,0 +1,205 @@
+MONGODB
+
+
+Mongo shell -> command line interface for interacting with the MongoDB DBs
+
+Why do we use mongosh
+
+Javascript environment 
+Enhanced syntax 
+Cross platform support
+With or without compass 
+
+
+Mongodb compass
+
+Its a graphical user interface (GUI) for mongoDB, it makes db management more interactive 
+
+features->
+Data visualisation
+Inbuilt mongo shell
+Document viewer
+
+
+MongoDB Atlas
+
+
+Mongo Shell Commands
+
+
+DATABASE LEVEL COMMANDS—-------------------------------------
+Show dbs -> to list all the databases
+Use db_name -> mongo shell either switches to that db if it exists or creates a new db for that name if that already doesnt exist 
+db.Dropdatabase() -> deletes the whole database
+db.stats() -> it will show all the statistics of the database 
+Db -> it will show you the name of the current db
+
+Inside the db
+
+Show collections 
+db.createCollection(‘name’) -> creates a new collection inside the db
+db.collection_name.drop() -> this deletes the collection
+db.collection_name.stats() -> get the statistics of the db
+db.collection_name.renameCollection(‘new_name’) -> renames the collection
+
+To clear the shell -> cls
+
+Sharding -> this refers to scaling of the databases horizontally
+
+CRUD OPERATIONS
+https://www.mongodb.com/docs/manual/introduction/ 
+
+
+MONGOOSE CRUD COMMANDS
+
+CRUD 
+
+create
+
+
+SINGLE user
+1)  Model.create(data) -> model.create method 
+2) new keyword -> user constructor + save()
+    new User(user)
+    await save();
+
+
+Multiple users 
+3) User.insertMany(users_array)
+
+Read
+
+find()  -> returns an array of objects
+findOne() -> return only the FIRST OBJECT that MATCHES the condition
+
+
+A. Find all Users 
+1) User.find();
+2) When we only want specific fields - User.find({}, 'name email');
+3) User.find(
+    {},
+    '-field' -> this - will exclude this field 
+)
+4) User.find().lean() -> this returns plain objects for increased efficiency
+
+
+CONDITIONS 
+
+5) find the user whos name is Accio 
+    User.find(
+        {
+            field:"Value"
+        }
+    )
+
+6) match multiple conditions 
+
+LOGICAL Operators
+
+AND,
+  const user = await User.find(
+            {
+                $and:[
+                    {
+                        email:"accio@accio.com"
+                    },
+                    {
+                        role:"user"
+                    }
+                ]
+            }
+        )
+
+
+
+
+OR,
+
+  const user = await User.find(
+            {
+                $or:[
+                    {
+                        email:"accio@accio.com"
+                    },
+                    {
+                        role:"user"
+                    }
+                ]
+            }
+        )
+
+NOR
+  const user = await User.find(
+            {
+                $nor:[
+                    {
+                        email:"accio@accio.com"
+                    },
+                    {
+                        role:"user"
+                    }
+                ]
+            }
+        )
+
+Comparison Operators
+
+  //comparing the ages 
+        const users = await User.find(
+            {
+                //age should be greater than 18
+                age:{
+                    $comparison : 10
+                }
+            }
+        )
+
+comparison      syntax
+    >              $gt 
+    <               $lt
+    >=              $gte
+    <=              $lte
+    !=                $ne
+
+Range Comparison 
+
+age > 18 and age<50
+A)   age:{
+                    $gt:10, //age should be greater than 10
+                    $lt:50 //age should be less than 50
+                }
+B) age >18 AND age <50
+ {
+
+               $and:[
+                {
+                    age:{
+                        $gt:18
+                    }
+                },
+                {
+                    age:{
+                        $lt:50
+                    }
+                }
+               ]
+            }
+
+age : 18, 20, 50, 40
+
+$in -> the value should exist in these permitted values 
+ {
+                age:{
+                    $in : [ 30, 40, 18] //find users with age 20, 30, 40 or 18
+                }
+            }
+
+$nin: not in this 
+
+
+update
+
+
+
+delete 
+
