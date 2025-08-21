@@ -101,6 +101,68 @@ res.status(200).json({
 })
 
 
+router.put("/updateinfo", async (req, res)=>{
+    try{
+        const { email, newemail } = req.body; //extracting email from the request body
+        
+        // const updatedUser = await User.updateOne(
+        //     {
+        //         email:email //find the user with the given email
+        //     },
+        //     {
+        //         $set:
+        //         {
+        //             email:newemail //update the email to the new email
+        //         }
+        //     }
+        // )
+
+        const updatedUser = await User.updateMany(
+            {
+                age:{
+                    $gt:18
+                }
+            },
+            {
+                $set:{
+                    name:"A user who can Vote!!!!"
+                }
+            }
+        );
+
+        // const newuser = await User.findOne({
+        //     email:newemail
+        // })
+
+        const newusers = await User.find(
+            {
+                age:{
+                    $gt:18
+                }
+            }
+        ).lean();
+        //returns an modified count 
+        if(updatedUser.modifiedCount>0){
+            res.status(200).json({
+                message: "User updated successfully",
+                data: updatedUser,
+                newUser: newusers
+            });
+        }
+
+    }
+    catch(err){
+        console.error("Error updating user:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
+
+
+
 router.get("/compare", async (req, res)=>{
     try{
         //comparing the ages 
@@ -124,6 +186,243 @@ router.get("/compare", async (req, res)=>{
         });
     }
 })
+
+
+router.put("/update", async (req, res)=>{
+    try{
+        //findOneAndUpdate -> find a user and update it
+
+        const { email, newemail } = req.body; //extracting email from the request body
+
+        const updatedUser = await User.findOneAndUpdate(
+            {
+                //matching condition
+                email:email //find the user with the given email
+            },
+            {
+                $set:{
+                    email:newemail //update the email to the new email
+                }
+            },
+            {
+                //optional 
+                upsert: true, //if the user does not exist, create a new user with the given email
+                runValidators: true, //run the validators on the updated fields
+                new: true //return the updated user
+            }
+        )
+        res.status(200).json({
+            message: "User updated successfully",
+            data: updatedUser
+        })
+    }
+    catch(err){
+        console.error("Error updating user:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
+
+router.put("/updatebyid/:id", async (req, res)=>{
+    try{
+        //whenever you use id, it is always preferred to use id through route params
+        const id = req.params.id; //extracting id from the request params
+        
+        const { newemail, name } = req.body; //extracting new email and name from the request body
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id, //this is the user's id
+            {
+                $set:{
+                    email:newemail,
+                    name:name
+                }
+            },
+            {
+                upsert: true, //if the user does not exist, create a new user with the given email
+                runValidators: true, //run the validators on the updated fields
+                new: true //return the updated user
+            }
+        )
+        if(!updatedUser){
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "User updated successfully",
+            data: updatedUser
+        });
+    }
+    catch(err){
+        console.error("Error updating user:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+} )
+
+router.put("/replace", async (req, res)=>{
+    try{
+        const { email, newemail, age, password, name, role } = req.body; //extracting email from the request body
+
+        const result = await User.replaceOne(
+            {
+                email:email
+            },
+            {
+                email:newemail,
+                age:age,
+                password:password,
+                name:name,
+                role:role
+            },
+            {
+                upsert: true, //if the user does not exist, create a new user with the given email
+                runValidators: true, //run the validators on the updated fields
+            }
+        )
+
+        res.status(200).json({
+            message: "User replaced successfully",
+            data: result
+        });
+    }catch(err){
+        console.error("Error replacing user:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
+
+router.delete("/delete", async (req, res)=>{
+    try{
+
+        const {email } = req.body; //extracting email from the request body
+
+        const deletedUser = await User.deleteOne({
+            
+            email:email //find the user with the given email
+        })
+
+        res.status(200).json({
+            message: "User deleted successfully",
+            data: deletedUser
+        });
+
+
+    }catch(err){
+        console.error("Error deleting user:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
+router.get("/getAdults", async (req, res) => {
+    try {
+        const time = new Date();
+        const oneMonthAgo = new Date(time.setMonth(time.getMonth()-1)); //get the date one month ago
+        const users = await User.find({
+            $and: [
+                {
+                    //adults
+                    age: {
+                        $gte: 18
+                    }
+                }, {
+                    //role is admin
+                    role: "admin"
+                },
+                {
+                    createdAt:{
+                        $gte: oneMonthAgo //users created in the last one month
+                    }
+                }
+            ]
+            //name and email 
+        })
+        .select("name email") //this will select only the name and email fields from the user collection
+
+        if (!users) {
+
+            res.json({ message: "no User with that role" })
+
+        }
+
+        res.json({ users: users, message: "Users fetched Successfully" })
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.json(500).json({ message: "Internal Server Error", error: err })
+
+    }
+
+})
+
+router.get("/aggregate", async (req, res)=>{
+    try{
+        const data = await User.aggregate(
+            [
+                {
+                    //match stage to filter users
+                    $match:{
+                        age:{
+                            $gt: 18
+                        }
+                    }
+                },
+                {
+                    //group stage to group users by any field 
+                    $group:{
+                        _id:"$role", //grouping by role
+                        totalUsers: {
+                            $sum:1 //counting the number of users in each group
+
+                        },
+                        averageAge:{
+                            $avg:"$age" //calculating the average age of users in each group
+                        }
+                    
+                    }
+                },
+                {
+                    //project stage to reshape the output
+                    //we can include or exclude fields from the output
+                    $project:{
+                        //first remove the _id field
+                        _id:0, //0 means exclude the field
+                        role:"$_id", //renaming _id to role
+                        totalUsers:1, //include totalUsers field
+                        averageAge:1 //include averageAge field
+                    }
+                }
+            ]
+        )
+        res.status(200).json({
+            message: "Aggregation successful",
+            data: data
+        });
+    }
+    catch(err){
+        console.error("Error in aggregation:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
 
 
 router.get("/", home)

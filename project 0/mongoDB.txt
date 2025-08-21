@@ -199,7 +199,121 @@ $nin: not in this
 
 update
 
+1) User.updateOne(
+    {
+        //contains the condition that will be matched with the user
+    },
+    {
+        $set :{
+            {
+                value:"new value"
+            }
+        }
+    }
+)
 
+2. User.updateMany(
+    {
+        //write a query here that is true for many users
+    },
+    {
+        $set:{
+            key:value 
+        }
+    }
+)
+
+3. FindOneAndUpdate -> mongoose specific -> options 
+User.findOneAndUpdate(
+    {
+        //matching
+    },
+    {
+        $set:{
+            new value
+        }
+    },
+    {
+        new:true //returns the updated document from scratch
+        upsert:true, //create a new document if it already does not exist
+        runValidators:true, //Run schema validators 
+
+    }
+)
+
+4. this is one of the most efficient update queries that we have 
+non blocking 
+user experience 
+
+User.findByIdAndUpdate(
+    userId, 
+    {
+        //update information
+        $set:{
+            key:value
+        }
+    },
+    {
+        new:true,
+        runValidators:true
+    }
+)
+
+5. when we have to replace entire document except for id
+replaceOne({
+//matching condition
+},{
+    object 
+})
 
 delete 
 
+deleteOne()
+
+User.deleteOne({
+    email:"abc@gmail.com"
+})
+
+deleteMany() 
+
+User.deleteMany({
+    email:"123@234.com"
+})
+
+
+User.findOneAndDelete(
+    {
+        email:email
+    }
+)
+
+
+User.findByIdAndDelete(userId)
+
+
+//role -> dynamic route -> find users by role 
+
+router.get("/userbyrole", async(req,res) => {
+  try{
+    const {role} = req.body;
+    const users = await User.find({role:role});
+    if(!users){
+      res.json({message:"no User with that role"})
+    }
+    res.status(200).json({message:"users found", users:users})
+  }
+  catch(err){
+    res.send(err.message);
+  }
+})
+
+
+
+
+
+
+
+
+//adult admins 
+//optionl -> signed up in the last month or last 30 days 
+//optional -> only display their name and email 

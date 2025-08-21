@@ -1,0 +1,27 @@
+Aggregation pipelines are a framework for data transformation and processing, these help us in getting insights from the data, being non destructive and flexible
+
+Aggregation pipelines consist of multiple independant stages of processing 
+
+you can process the data one by one stage wise and it will provide the data in whatever condition, whatever format and whatever amount we want 
+
+
+Model.aggregate(
+    [
+        {
+            //stage 1
+        },
+        {
+            //stage 2
+        },
+        {
+            stage 3
+        }
+    ]
+)
+
+STAGES 
+
+
+1. $match -> filters the documents based on specified conditions, similar to find() method 
+
+2. $group -> used to group the data based on specified fields and performs calculations

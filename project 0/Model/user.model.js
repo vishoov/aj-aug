@@ -62,6 +62,14 @@ const userSchema = new mongoose.Schema({
     timestamps:true //this will add createdAt and updatedAt fields to the schema
 });
 
+//index we define an index as the query that will be used frequently 
+//make email the index
+//whenever we are searching through email, it will be faster
+
+userSchema.index({email:1}); //1 for ascending order, -1 for descending order
+//this will create an index on the email field in the user collection
+//this will make the search through email faster
+
 
 //create a user model
 //A model is a class that is used to create and read documents from the collection
