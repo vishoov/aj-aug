@@ -423,7 +423,97 @@ router.get("/aggregate", async (req, res)=>{
     }
 })
 
+router.get("/sorted", async (req, res)=>{
+    try {
+        const users = await User.aggregate(
+            [
+                {
+                    $match:{
+                        age:{
+                            $gt:0
+                        }
+                    }
+                },
+            {
+                $sort: {
+                age: -1 //sort by age in descending order
+                }
+            }
+            ]
+        );
 
+        res.status(200).json({
+            message: "Sorted users fetched successfully",
+            data: users
+        });
+        }
+        catch (err) {
+        console.error("Error fetching sorted users:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+        }
+})
+
+router.get("/limited/:limit", async (req, res)=>{
+    try{
+        const limit = parseInt(req.params.limit); //default limit is 10
+
+
+        const users = await User.aggregate(
+            [
+                {
+                    $match:{
+                        age:{
+                            $gt:0
+                        }
+                    }
+                },
+                {
+                    $limit:limit //limit the number of users fetched
+                }
+                ,{
+                    $skip:5
+                }
+            ]
+        )
+        res.status(200).json({
+            message: "Limited users fetched successfully",
+            data: users
+        })
+    }
+    catch(err){
+        console.error("Error fetching limited users:", err);
+        res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
+    }
+})
+
+
+router.get("/products/:page", async (req, res) => {
+    try {
+        const page = req.params.page;
+        let skipNo = (page - 1) * 10;
+        const users = await User.aggregate([
+            { $skip: skipNo },
+            { $limit: 10 }
+        ]);
+        if (!users) {
+            res.json({ message: "no User Found" })
+        }
+ 
+        res.status(200).json({
+            message: "Users fetched Successfully",
+            users
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server Error", err: error })
+    }
+})
 
 router.get("/", home)
 

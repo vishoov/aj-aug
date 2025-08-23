@@ -10,7 +10,7 @@ Model.aggregate(
         {
             //stage 1
         },
-        {
+        {   
             //stage 2
         },
         {
@@ -25,3 +25,130 @@ STAGES
 1. $match -> filters the documents based on specified conditions, similar to find() method 
 
 2. $group -> used to group the data based on specified fields and performs calculations
+
+3. $project -> to reshape the data 
+
+4. $sort - > this sorts the data based on some conditions
+
+5. $limit -> this limits the amount of data that you are fetching 
+
+6. $skip -> this skips the number of queries 
+
+Q1)  implement pagination 
+
+page 1-> first 50 
+page 2 -> next 50 -> query -> skip 50 
+page 2 -> next 50 -> skip another 50 
+
+
+Q2)
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  age: Number,
+  city:{
+    type:String,
+    unique:true
+  }
+  joinedDate: { type: Date, default: Date.now },
+  isActive: { type: Boolean, default: true }
+});
+
+Find the total number of active users in each city
+
+
+router.get("/aggregate-from-each-city", async (req, res)=>{
+    try{
+        const data = await User.aggregate(
+            [
+                {
+                    $match:{
+                        isActive:true,
+                    }
+                },
+
+                {
+                    $group:
+                        _id:"$city",
+                     
+                        totalUsers: {
+                            $sum:1 //counting the number of users in each grou
+ 
+                        },
+                    }
+                },
+                {
+                    $project:{
+                        _id:0,
+                        city:'$_id'
+                        totalUsers:1
+                    }
+                }
+                {
+                    $sort:{
+                        totalUsers:-1
+                    }
+                }
+            ]
+        )
+        res.status(200).json({
+            data: data
+        });
+    }
+    catch(err){
+        console.error("Error in aggregation:", err)
+    }
+})
+
+
+router.get("/activeUsers", async (req, res) => {
+
+    try {
+
+        const users = await User.aggregate([
+            //match activeUsers
+            { $group: { _id: "$city", count: { $sum: 1 } } }
+
+        ]);
+
+        res.status(201).json({ message: "Users Fetched Successfully", data: users });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({ message: "Internal Server Error", err: error })
+
+    }
+
+})
+
+
+/ models/Order.js
+const orderSchema = new mongoose.Schema({
+  userId: mongoose.Schema.Types.ObjectId,
+  items: [{
+    productName: String,
+    quantity: Number,
+    price: Number
+  }],
+  totalAmount: Number,
+  status: String, // 'pending', 'completed', 'cancelled'
+  orderDate: { type: Date, default: Date.now }
+});
+
+
+Calculate order statistics: {total revenue, average order value, and order count} by status
+
+{
+    totalRevenue:
+    totalOrders:
+    avgOrderValue:
+}
+{
+status:pending;
+totalRevenue:
+totalOrders:
+avgOrderValue:
+}
