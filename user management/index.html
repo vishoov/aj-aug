@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background: #0078d7;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #0078d7;
+            border-bottom: 2px solid #0078d7;
+            padding-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #f9f9f9;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        ul li strong {
+            color: #0078d7;
+        }
+
+        pre {
+            background: #f4f4f9;
+            padding: 1rem;
+            border-left: 4px solid #0078d7;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        pre code {
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem 0;
+            background: #0078d7;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Management API</h1>
+    </header>
+    <main>
+        <p>This is a simple user management API built with Node.js and Express.</p>
+
+        <h2>Endpoints</h2>
+
+        <ul>
+            <li><strong>GET /users</strong>: Retrieve a list of all users.</li>
+            <li><strong>GET /users/:id</strong>: Retrieve a specific user by ID.</li>
+            <li><strong>POST /users</strong>: Create a new user. Requires a JSON body with user data</li>
+            <li><strong>PUT /users/:id</strong>: Update an existing user by ID. Requires a JSON body with "name" and/or "email".</li>
+            <li><strong>DELETE /users/:id</strong>: Delete a user by ID.</li>
+        </ul>
+
+        <h2>Example Requests</h2>
+        <pre>
+GET /users
+Response:
+[
+    {"id": 1, "name": "John Doe", "email": "abc@gmail.com"},
+    {"id": 2, "name": "Jane Smith", "email": "haha@gmail.com"}
+]
+        </pre>
+
+        <pre>
+GET /users/1
+Response:
+{"id": 1, "name": "John Doe", "email": "abc@gmail.com"}
+        </pre>
+
+        <pre>
+POST /users
+Request Body:
+{
+    "name": "Alice Johnson",
+    "email": "abc@gmail.com",
+    "password": "password123"
+}
+Response:
+{"id": 3, "name": "Alice Johnson", "email": "abc@gmail.com"}
+        </pre>
+
+        <pre>
+PUT /users/1
+Request Body:
+{
+    "name": "John Updated",
+    "email": "updated@gmail.com"
+}
+Response:
+{"id": 1, "name": "John Updated", "email": "updated@gmail.com"}
+        </pre>
+
+        <pre>
+DELETE /users/1
+Response:
+{"message": "User with ID 1 has been deleted."}
+        </pre>
+    </main>
+    <footer>
+        &copy; 2023 User Management API
+    </footer>
+</body>
+</html>

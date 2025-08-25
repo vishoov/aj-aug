@@ -1,0 +1,66 @@
+layered format of security for professionl use cases
+
+
+1. SQL Injection or NoSql Injection Attacks 
+//malicious QUERIES that are sent by hackers disguised as normal information 
+
+app.get("/users", (req, res)=>{
+    const userId = req.query.id;
+
+    //solution
+    //use input sanitization 
+    if(typeof userId !=="Number"){
+        return res.send("invalid user id")
+    }
+
+
+    const query = await User.find({
+        id:userId
+    })
+    res.send(query)
+})
+
+Malicious query -> /users?id=1; db.collection.deleteAll();
+
+
+2. Cross Site Scripting 
+
+attackers send malicious SCRIPTS 
+
+
+
+
+/profile?name="Accio"
+app.get("/profile", async (req, res)=>{
+     const userName = req.query.name;
+
+})
+
+//malicious scripts -> /profile?name=<script>alert('XSS')</script>
+
+solution -> xss
+
+
+3. DDoS Attack 
+
+    Denial of Service Attack ->  our server has a limited capacity only 1000 requests can be recieved in a single hour 
+
+    -> hackers -> they attack our server by sending sooo many requests that our server gets overwhelmed 
+
+    100000s bots -> 1 request each 
+
+    -> huge number of requests -> server gets overwhelmed s
+
+    solution -> rate limiting 
+
+    it limits the amount of requests we can recieve in a given time frame from a certain IP address
+
+Data Protection 
+
+if an employee who has access to database, if that employe steals data or if anyone my mistake gets all the data -> vulnerable of a user losing their credentials 
+
+1. password encryption 
+
+encrypt the password before it is saved to the db
+
+bcrypt -> helps us in encryption the data 
