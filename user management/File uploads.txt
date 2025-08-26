@@ -1,0 +1,7 @@
+in order to upload a file to server 
+
+content -> pdf, image, video 
+
+image-> cdn -> link 
+storage -> image -> id -> storage 
+

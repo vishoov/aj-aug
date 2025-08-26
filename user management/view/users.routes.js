@@ -1,10 +1,16 @@
 const router = require('express').Router();
 const User = require('../model/users.model');
 const xss = require('xss');
+const { createToken, verifyToken } = require('../middlewares/jwt.auth');
+
+
 
 
 // GET /users: Retrieve a list of all users.
-router.get("/users", async (req, res)=>{
+router.get("/users", verifyToken, async (req, res)=>{
+
+    
+
     console.log("GET /users route invoked");
     const users = await User.find();
     res.json(users);
@@ -26,9 +32,16 @@ router.post("/users", async (req, res)=>{
 
     const {name, email, password, age, role} = req.body;
 
+   
     const newUser = new User({name, email, password, age, role});
+
+    const token = await createToken(newUser);
+
+
+
+
     await newUser.save();
-    res.status(201).json(newUser);
+    res.status(201).json(newUser, {token});
 })
 
 //LOGIN user
@@ -40,7 +53,10 @@ router.post("/users/login", async (req, res)=>{
         return res.status(400).json({error:"Email and password are required"});
     }
 
+
     const user = await User.findOne({email});
+
+
 
     if(!user){
         return res.status(404).json({error:"User not found"});
@@ -56,7 +72,9 @@ router.post("/users/login", async (req, res)=>{
         return res.status(401).json({error:"Invalid password"});
     }
 
-    res.json({message:"Login successful", user});
+    const token = await createToken(user);
+
+    res.json({message:"Login successful", user, token});
 }
 )
 // PUT /users/:id: Update an existing user by ID. Requires a JSON body with "name" and/or "email".

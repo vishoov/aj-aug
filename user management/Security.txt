@@ -64,3 +64,25 @@ if an employee who has access to database, if that employe steals data or if any
 encrypt the password before it is saved to the db
 
 bcrypt -> helps us in encryption the data 
+
+
+
+
+API Security -> Token based authentication 
+API security is the protection of API routes from unauthorized users, hackers and ensures secure data exchange between front end and backend -> 
+
+Types of routes 
+
+Public routes -> that can be accessed by anyone (even if the user is not authentication)
+
+Protected Routes 
+
+
+Why JWT?
+
+tamper-proof -> the signature part makes it recoginzable if a token has been changed 
+expiration -> JWT contains expiration date -> after this date token will become unusable
+Identification -> specify for whom the token was used and the specific info of that user can be stored
+stateless-> because they are not stored on the server 
+
+Multer -> file management in nodejs 

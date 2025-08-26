@@ -3,7 +3,11 @@ const app = express();
 const mongoose = require('mongoose');
 const userRoutes = require('./view/users.routes');
 const loggingMiddleware = require('./middlewares/logging.mw');
-const mongoURI = "mongodb+srv://vverma971:wFTkpLpqVnMCw7tf@cluster0.lkjbhks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const dotenv = require('dotenv');
+dotenv.config();
+const multer = require('multer');
+
+const mongoURI = process.env.MONGO;
 const limiter = require('./middlewares/rate-limit');
 mongoose.connect(mongoURI)
 .then(()=>{
@@ -15,6 +19,25 @@ mongoose.connect(mongoURI)
 
 app.use(limiter); // Apply rate limiting middleware to all requests
 app.use(loggingMiddleware);
+
+// import sessionIDs from './sessionIDs.js';
+// app.use((req, res, next)=>{
+//     const clientID = req.header('Client-ID');
+
+//     const sessionID = sessionIDs.find(id => id === clientID);
+
+
+
+//     if(!sessionID){
+//         return res.status(401).json({error:"Unauthorized: Invalid Client-ID"});
+//     }
+//     next();
+
+
+
+// })
+
+
 
 // //middleware error handling 
 // //this will catch errors from async functions
