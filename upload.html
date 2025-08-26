@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload an image</title>
+</head>
+<body>
+    <h1>Welcome to this file uploading feature</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Upload Image</button>
+    </form>
+
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async function(event) {
+            const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput.files.length === 0) {
+                event.preventDefault();
+                alert('Please select a file to upload.');
+            }
+
+            const file = fileInput.files[0];
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!validImageTypes.includes(file.type)) {
+                event.preventDefault();
+                alert('Please upload a valid image file (JPEG, PNG, GIF).');
+            }   
+
+            const url = "http://localhost:3000/upload"; // Ensure the server is configured to handle POST requests at this endpoint
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const result = await response.json();
+                console.log('Success:', result);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        });
+
+
+    </script>
+</body>
+</html>
