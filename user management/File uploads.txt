@@ -5,3 +5,19 @@ content -> pdf, image, video
 image-> cdn -> link 
 storage -> image -> id -> storage 
 
+Multer
+
+Node.js Middleware specifically developed for multipart data or form data 
+
+Example -> instagram post functionality -> form -> content or media, caption, tagged people, comment -> multipart/form-data -> file data -> encoding -> that is why it needs to be treated specially -> file upload -> Multer 
+
+
+-> Middleware based functionality 
+-> Multipart data only 
+-> Request object manipulation -> file -> req.files 
+-> Flexible storage options -> local storage, memory and custom engines (AI)
+
+
+Multipart Data -> form url enocded -> key:value -> binary format 
+
+Multer benefits -> req.body, req.files, req.file 

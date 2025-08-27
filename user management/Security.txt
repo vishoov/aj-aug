@@ -85,4 +85,7 @@ expiration -> JWT contains expiration date -> after this date token will become 
 Identification -> specify for whom the token was used and the specific info of that user can be stored
 stateless-> because they are not stored on the server 
 
+Environment variables 
+
+
 Multer -> file management in nodejs 

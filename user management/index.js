@@ -68,6 +68,79 @@ app.get("/", async (req, res)=>{
         res.status(500).send('Internal Server Error');
     }
 })
+//req -> middleware (multer) -> route handler -> response
+
+
+//multer setup for file uploads
+const storagelogic = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/'); // specify the destination directory
+        //null means no error 
+        //uploads folder should exist
+    },
+    filename: function(req, file, cb){
+        
+        cb(null, Date.now().toLocaleString().replace(/[/,: ]/g, '-') + '-' + file.originalname); 
+        
+    }
+})
+
+const upload = multer({storage: storagelogic});
+
+
+app.post("/upload", upload.single('file'), (req, res)=>{
+    try{
+
+        const fileDetails = req.file;
+
+        console.log('File info:', req.file);
+        res.send('File uploaded successfully');
+
+    }catch(err){
+        console.error('Error handling file upload:', err);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
+const advancedUpload = multer({
+    storage: storagelogic, 
+    limits: {
+        fileSize: 1*1024*1024, // 10MB file size limit
+        files: 5, // max 5 files
+        fieldSize: 1*1024*1024, // max 25MB per field
+        fieldNameSize: 100, // max 100 bytes for field name
+        fields:10 // max 10 non-file fields
+    },
+    fileFilter: (req, files, cb)=>{
+        const allowedMimes = ['image/jpeg', 'image/png', 'image/gif'];
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+
+        const fileExtension = files.originalname.substring(files.originalname.lastIndexOf('.')).toLowerCase();
+
+        if(allowedMimes.includes(files.mimetype) && allowedExtensions.includes(fileExtension)){
+            cb(null, true);
+        }else{
+            cb(new Error('Invalid file type. Only JPEG, PNG and GIF image files are allowed.'));
+        }
+    }
+})
+
+//multiple files upload
+app.post('/upload-multiple', advancedUpload.array('files', 5), (req, res)=>{
+    try{
+        if(!req.files || req.files.length === 0){
+            return res.status(400).send('No files uploaded');
+        }
+
+        console.log('Files info:', req.files);
+        res.send('Multiple files uploaded successfully');
+    }
+    catch(err){
+        console.error('Error handling multiple file upload:', err);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 
 const PORT = 3000;
 
