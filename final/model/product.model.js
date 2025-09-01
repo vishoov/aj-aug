@@ -11,6 +11,12 @@ const productSchema=new mongoose.Schema({
       required:true
   
     },
+    seller:{
+      //through this we can identify who to inform when a product is bought
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User",
+      required:true,
+    },
   
     description:{
   
