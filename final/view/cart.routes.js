@@ -165,6 +165,7 @@ router.delete("/delete", async (req, res) => {
 });
 
 
+
 router.get("/cart", async (req, res)=>{
     try{
         const carts = await Cart.find();
